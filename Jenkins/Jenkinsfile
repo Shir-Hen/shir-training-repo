@@ -9,24 +9,23 @@ pipeline {
                     echo "Init"
             }
         }
+		
         stage ('Maven Build') {
+			 agent {
+					docker {
+					  image 'maven:3.6.3'
+					}
+				 }		
             steps {
                 bat 'mvn clean package'
                 echo 'Shir finished Building her Project'
             }
 		}
-		stage('Docker Build') {
-            steps {
-                  bat 'docker.build("target/helloworld-1.1.jar")'
-                }
-        }		
+			
       stage ('Run') {
             steps {
                 //bat 'java -cp target/helloworld-1.1.jar com.coveros.demo.helloworld.HelloWorld'
-				sh "docker stop hello-world | true"
-                sh "docker rm hello-world | true"
-                sh "docker run --name hello-world target/helloworld-1.1.jar"
-            
+				bat 'docker build -t target/helloworld:latest .'
                 echo 'Shir is finishing Running her Project'  
             }
       }      
