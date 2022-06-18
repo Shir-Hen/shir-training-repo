@@ -18,7 +18,7 @@ pipeline {
       stage ('Run') {
             steps {
                 bat 'java -cp target/helloworld-1.1.jar com.coveros.demo.helloworld.HelloWorld'
-                echo 'Shir is finishing Running her Project' 
+                echo 'Shir is finishing Running her Project'  
             }
       }      
         
