@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker {image 'maven:3.6.3' } }
+    agent { docker { image 'maven:3.6.3' } }
     tools { 
         maven 'maven-3.6.3'
     }
@@ -9,15 +9,26 @@ pipeline {
                     echo "Init"
             }
         }
-        stage ('Build') {
+        stage ('Maven Build') {
             steps {
                 bat 'mvn clean package'
                 echo 'Shir finished Building her Project'
             }
-      }
+		}
+		stage('Docker Build') {
+            steps {
+                script {
+                    docker.build("target/helloworld-1.1.jar")
+                }
+            }
+        }		
       stage ('Run') {
             steps {
-                bat 'java -cp target/helloworld-1.1.jar com.coveros.demo.helloworld.HelloWorld'
+                //bat 'java -cp target/helloworld-1.1.jar com.coveros.demo.helloworld.HelloWorld'
+				sh "docker stop hello-world | true"
+                sh "docker rm hello-world | true"
+                sh "docker run --name hello-world target/helloworld-1.1.jar"
+            
                 echo 'Shir is finishing Running her Project'  
             }
       }      
