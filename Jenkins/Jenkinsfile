@@ -17,10 +17,8 @@ pipeline {
 		}
 		stage('Docker Build') {
             steps {
-                script {
-                    docker.build("target/helloworld-1.1.jar")
+                  bat 'docker.build("target/helloworld-1.1.jar")'
                 }
-            }
         }		
       stage ('Run') {
             steps {
