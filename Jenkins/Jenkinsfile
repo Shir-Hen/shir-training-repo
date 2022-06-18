@@ -1,18 +1,28 @@
 pipeline {
     agent any
-
+    tools { 
+        maven 'maven-3.6.3'
+    }
     stages {
-        stage('Stage X') {
+        stage ('Initialize') {
             steps {
-                echo 'Step A'
-                echo 'Step B'
+                    echo "Init"
             }
         }
-        stage('Stage Y') {
+        stage ('Build') {
             steps {
-                echo 'Step C'
-                echo 'Step D'
+                bat 'mvn clean package'
+                echo 'Shir finished Building her Project'
             }
-        }        
+      }
+      stage ('Run') {
+            steps {
+                bat 'java -cp target/helloworld-1.0.jar com.coveros.demo.helloworld.HelloWorld'
+                echo 'Shir is finishing Running her Project'
+            }
+      }      
+        
+        
+        
     }
 }
