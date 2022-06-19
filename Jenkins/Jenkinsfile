@@ -4,33 +4,13 @@ pipeline {
         maven 'maven-3.6.3'
     }
     stages {
-        stage ('Initialize') {
+	
+        stage ('create image') {
             steps {
-                    echo "Init"
-            }
-        }
-		
-        stage ('Maven Build') {
-			 agent {
-					docker {
-					  image 'maven:3.6.3'
-					}
-				 }		
-            steps {
-                bat 'mvn clean package'
+                bat 'docker build -t my-first-image docker/Dockerfile'
                 echo 'Shir finished Building her Project'
             }
-		}
-			
-      stage ('Run') {
-            steps {
-                //bat 'java -cp target/helloworld-1.1.jar com.coveros.demo.helloworld.HelloWorld'
-				bat 'docker build -t target/helloworld:latest .'
-                echo 'Shir is finishing Running her Project'  
-            }
-      }      
-        
-        
+		}  
         
     }
 }
