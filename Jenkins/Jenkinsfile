@@ -1,27 +1,13 @@
 pipeline {
     agent any
-    tools { 
-        maven 'maven-3.6.3'
-    }
     stages {
-        stage ('Initialize') {
+	
+        stage ('create image') {
             steps {
-                    echo "Init"
-            }
-        }
-        stage ('Build') {
-            steps {
-                bat 'mvn clean package'
+                bat 'docker build . -t my-second-image -f docker/Dockerfile'
                 echo 'Shir finished Building her Project'
             }
-      }
-      stage ('Run') {
-            steps {
-                bat 'java -cp target/helloworld-1.1.jar com.coveros.demo.helloworld.HelloWorld'
-                echo 'Shir is finishing Running her Project'  
-            }
-      }      
-
+		}  
         
     }
 }
