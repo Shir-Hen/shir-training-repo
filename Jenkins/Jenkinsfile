@@ -4,7 +4,7 @@ pipeline {
 	
         stage ('create image') {
             steps {
-                bat 'docker build . -t my-first-image -f docker/Dockerfile'
+                bat 'docker build . -t my-second-image -f docker/Dockerfile'
                 echo 'Shir finished Building her Project'
             }
 		}  
